@@ -2,6 +2,7 @@ package fr.arolla.employees;
 
 import fr.arolla.Person;
 import fr.arolla.diagnostics.PatientDiagnostic;
+import fr.arolla.hospitalServices.HospitalServices;
 import fr.arolla.patient.DoctorFile;
 import fr.arolla.patient.Gender;
 
@@ -43,5 +44,23 @@ public class Doctor {
 
     public void setCurrentDoctorFile(DoctorFile currentDoctorFile) {
         this.currentDoctorFile = currentDoctorFile;
+    }
+
+    public void setNextStepForPatient() {
+        switch (currentDoctorFile.getDiagnostic()) {
+            case CORONAVIRUS:
+                currentDoctorFile.setNextStep(HospitalServices.REANIMATION);
+                break;
+            case BROKEN_LEG:
+            case TOOTH_RAGE:
+                currentDoctorFile.setNextStep(HospitalServices.SURGERY);
+                break;
+            case BIG_HEAD:
+                currentDoctorFile.setNextStep(HospitalServices.PSYCHIATRY);
+                break;
+            case NOTHING:
+                currentDoctorFile.setNextStep(HospitalServices.HOME);
+                break;
+        }
     }
 }
