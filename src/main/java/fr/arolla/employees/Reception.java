@@ -1,27 +1,27 @@
 package fr.arolla.employees;
 
 import fr.arolla.Person;
-import fr.arolla.patient.SimplePatient;
+import fr.arolla.patient.ReceptionFile;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Reception {
-    private final LinkedList<SimplePatient> patientsWaitList = new LinkedList<>();
+    private final LinkedList<ReceptionFile> patientsWaitList = new LinkedList<>();
 
-    SimplePatient createNewPatient(final Person person) {
-        return new SimplePatient(person.firstName, person.lastName, person.socialSecurityNumber);
+    ReceptionFile createReceptionFile(final Person person) {
+        return new ReceptionFile(person.firstName, person.lastName, person.socialSecurityNumber);
     }
 
     public void addPatientToWaitList(final Person person) {
-        patientsWaitList.add(createNewPatient(person));
+        patientsWaitList.add(createReceptionFile(person));
     }
 
-    public List<SimplePatient> getPatientsWaitList() {
+    public List<ReceptionFile> getPatientsWaitList() {
         return patientsWaitList;
     }
 
-    public SimplePatient sendPatientToTheDoctor() {
+    public ReceptionFile sendPatientToTheDoctor() {
         return patientsWaitList.poll();
     }
 }

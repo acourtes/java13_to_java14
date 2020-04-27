@@ -1,7 +1,7 @@
 package fr.arolla.employees;
 
 import fr.arolla.Person;
-import fr.arolla.patient.SimplePatient;
+import fr.arolla.patient.ReceptionFile;
 import io.github.glytching.junit.extension.random.Random;
 import io.github.glytching.junit.extension.random.RandomBeansExtension;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ public class ReceptionTest {
     @DisplayName("Should create a patient with essential identity information")
     @Test
     void should_create_a_new_patient(@Random Person person) {
-        final SimplePatient result = reception.createNewPatient(person);
+        final ReceptionFile result = reception.createReceptionFile(person);
 
         assertThat(result).isNotNull();
         assertThat(result.firstName).isEqualTo(person.firstName);
@@ -34,12 +34,12 @@ public class ReceptionTest {
                                                            List<Person> persons) {
         persons.forEach(reception::addPatientToWaitList);
 
-        final List<SimplePatient> result = reception.getPatientsWaitList();
+        final List<ReceptionFile> result = reception.getPatientsWaitList();
 
         assertThat(result).hasSize(3);
-        assertThat(result.get(0)).isEqualTo(reception.createNewPatient(persons.get(0)));
-        assertThat(result.get(1)).isEqualTo(reception.createNewPatient(persons.get(1)));
-        assertThat(result.get(2)).isEqualTo(reception.createNewPatient(persons.get(2)));
+        assertThat(result.get(0)).isEqualTo(reception.createReceptionFile(persons.get(0)));
+        assertThat(result.get(1)).isEqualTo(reception.createReceptionFile(persons.get(1)));
+        assertThat(result.get(2)).isEqualTo(reception.createReceptionFile(persons.get(2)));
     }
 
     @DisplayName("Should remove the first patient in the wait list when a doctor is available")
@@ -48,14 +48,14 @@ public class ReceptionTest {
                                                            List<Person> persons) {
         persons.forEach(reception::addPatientToWaitList);
 
-        final SimplePatient result = reception.sendPatientToTheDoctor();
+        final ReceptionFile result = reception.sendPatientToTheDoctor();
 
-        assertThat(result).isEqualTo(reception.createNewPatient(persons.get(0)));
+        assertThat(result).isEqualTo(reception.createReceptionFile(persons.get(0)));
 
         final var patientsWaitList = reception.getPatientsWaitList();
 
         assertThat(patientsWaitList).hasSize(2);
-        assertThat(patientsWaitList.get(0)).isEqualTo(reception.createNewPatient(persons.get(1)));
-        assertThat(patientsWaitList.get(1)).isEqualTo(reception.createNewPatient(persons.get(2)));
+        assertThat(patientsWaitList.get(0)).isEqualTo(reception.createReceptionFile(persons.get(1)));
+        assertThat(patientsWaitList.get(1)).isEqualTo(reception.createReceptionFile(persons.get(2)));
     }
 }
