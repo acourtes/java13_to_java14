@@ -5,14 +5,14 @@ import fr.arolla.hospitalServices.HospitalServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DoctorFile {
-
     private PatientDiagnostic diagnostic;
+
     private Gender gender;
     private List<String> remarks;
     private HospitalServices nextStep;
-
     public PatientDiagnostic getDiagnostic() {
         return diagnostic;
     }
@@ -46,5 +46,21 @@ public class DoctorFile {
     public DoctorFile setNextStep(HospitalServices nextStep) {
         this.nextStep = nextStep;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DoctorFile that = (DoctorFile) o;
+        return getDiagnostic() == that.getDiagnostic() &&
+                getGender() == that.getGender() &&
+                Objects.equals(getRemarks(), that.getRemarks()) &&
+                getNextStep() == that.getNextStep();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDiagnostic(), getGender(), getRemarks(), getNextStep());
     }
 }

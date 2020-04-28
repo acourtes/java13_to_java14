@@ -4,23 +4,23 @@ import fr.arolla.Person;
 import fr.arolla.diagnostics.PatientDiagnostic;
 import fr.arolla.hospitalServices.HospitalServices;
 import fr.arolla.patient.DoctorFile;
-import fr.arolla.patient.types.PatientForPsychiatry;
-import fr.arolla.patient.types.PatientForReanimation;
-import fr.arolla.patient.types.PatientForSurgery;
+import fr.arolla.patient.types.*;
 import io.github.glytching.junit.extension.random.Random;
 import io.github.glytching.junit.extension.random.RandomBeansExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(RandomBeansExtension.class)
 public class DoctorTest {
-    private final Doctor doctor = new Doctor();
+    private final Doctor doctor = new Doctor(new WaitRoom());
 
     @Test
-    void should_create_a_doctor_file(@Random Person person) {
-        doctor.createDoctorFile(person);
+    void should_create_a_doctor_file(@Random SimplePatient patient) {
+        doctor.createDoctorFile(patient);
 
         final var doctorFile = doctor.getCurrentDoctorFile();
         assertThat(doctorFile).isNotNull();
@@ -28,9 +28,9 @@ public class DoctorTest {
     }
 
     @Test
-    void should_give_a_diagnostic_from_a_patient(@Random Person person) {
-        doctor.createDoctorFile(person);
-        final PatientDiagnostic result = doctor.diagnosePatient(person);
+    void should_give_a_diagnostic_from_a_patient(@Random SimplePatient patient) {
+        doctor.createDoctorFile(patient);
+        final PatientDiagnostic result = doctor.diagnosePatient(patient);
 
         assertThat(result).isNotNull();
         assertThat(doctor.getCurrentDoctorFile().getDiagnostic()).isNotNull();
@@ -158,6 +158,18 @@ public class DoctorTest {
         assertThat(patient).isInstanceOf(PatientForPsychiatry.class);
         final var patientForPsychiatry = (PatientForPsychiatry) patient;
         assertThat(patientForPsychiatry.getDiagnostic()).isEqualByComparingTo(diagnostic);
+    }
+
+    @Test
+    void should_get_the_first_patient_waiting_for_a_diagnostic(@Random(size = 3, type = SimplePatient.class)
+                                                               List<SimplePatient> patients) {
+        doctor.getWaitRoom().getPatientsForDoctorList().addAll(patients);
+        final var expectedPatient = patients.get(0);
+
+        final Patient result = doctor.callAPatientForDiagnose();
+
+        assertThat(result).isEqualTo(expectedPatient);
+        assertThat(doctor.getWaitRoom().getPatientsForDoctorList()).hasSize(2);
     }
 
     private DoctorFile createDoctorFile(PatientDiagnostic diagnostic, HospitalServices nextStep) {

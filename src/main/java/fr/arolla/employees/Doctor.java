@@ -1,6 +1,5 @@
 package fr.arolla.employees;
 
-import fr.arolla.Person;
 import fr.arolla.diagnostics.PatientDiagnostic;
 import fr.arolla.hospitalServices.HospitalServices;
 import fr.arolla.patient.DoctorFile;
@@ -13,30 +12,34 @@ import fr.arolla.patient.types.PatientForSurgery;
 public class Doctor {
 
     private DoctorFile currentDoctorFile;
+
+    public Doctor(WaitRoom waitRoom) {
+        this.waitRoom = waitRoom;
+    }
+
     private WaitRoom waitRoom;
 
-    public void createDoctorFile(Person person) {
-        final var doctorFile = new DoctorFile();
-        doctorFile.setGender(getGender(person));
-
-        currentDoctorFile = doctorFile;
+    public void createDoctorFile(Patient patient) {
+        currentDoctorFile = new DoctorFile().setGender(getGender(patient));
     }
 
-    private Gender getGender(Person person) {
+    private Gender getGender(Patient patient) {
         final var genders = Gender.values();
-        return genders[person.firstName.length() % genders.length];
+        return genders[patient.getPatientFile()
+                .getReceptionFile().firstName.length() % genders.length];
     }
 
-    public PatientDiagnostic diagnosePatient(Person person) {
-        final var diagnostic = getDiagnostic(person);
+    public PatientDiagnostic diagnosePatient(Patient patient) {
+        final var diagnostic = getDiagnostic(patient);
         currentDoctorFile.setDiagnostic(diagnostic);
 
         return diagnostic;
     }
 
-    private PatientDiagnostic getDiagnostic(Person person) {
+    private PatientDiagnostic getDiagnostic(Patient patient) {
         final var diagnostics = PatientDiagnostic.values();
-        return diagnostics[person.lastName.length() % diagnostics.length];
+        return diagnostics[patient.getPatientFile()
+                .getReceptionFile().lastName.length() % diagnostics.length];
     }
 
     public void addRemark(final String remark) {
@@ -78,13 +81,13 @@ public class Doctor {
 
         switch (nextStep) {
             case SURGERY:
-                patient = new PatientForSurgery(diagnostic);
+                patient = new PatientForSurgery().setDiagnostic(diagnostic);
                 break;
             case PSYCHIATRY:
-                patient = new PatientForPsychiatry(diagnostic);
+                patient = new PatientForPsychiatry().setDiagnostic(diagnostic);
                 break;
             case REANIMATION:
-                patient = new PatientForReanimation(diagnostic);
+                patient = new PatientForReanimation().setDiagnostic(diagnostic);
                 break;
             case HOME:
                 break;
@@ -101,5 +104,9 @@ public class Doctor {
 
     public void setWaitRoom(WaitRoom waitRoom) {
         this.waitRoom = waitRoom;
+    }
+
+    public Patient callAPatientForDiagnose() {
+        return waitRoom.getPatientsForDoctorList().poll();
     }
 }
