@@ -17,16 +17,18 @@ public class DoctorFile {
         return diagnostic;
     }
 
-    public void setDiagnostic(PatientDiagnostic diagnostic) {
+    public DoctorFile setDiagnostic(PatientDiagnostic diagnostic) {
         this.diagnostic = diagnostic;
+        return this;
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public DoctorFile setGender(Gender gender) {
         this.gender = gender;
+        return this;
     }
 
     public List<String> getRemarks() {
@@ -41,7 +43,8 @@ public class DoctorFile {
         return nextStep;
     }
 
-    public void setNextStep(HospitalServices nextStep) {
+    public DoctorFile setNextStep(HospitalServices nextStep) {
         this.nextStep = nextStep;
+        return this;
     }
 }

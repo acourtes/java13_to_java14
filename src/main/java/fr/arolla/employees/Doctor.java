@@ -5,10 +5,15 @@ import fr.arolla.diagnostics.PatientDiagnostic;
 import fr.arolla.hospitalServices.HospitalServices;
 import fr.arolla.patient.DoctorFile;
 import fr.arolla.patient.Gender;
+import fr.arolla.patient.types.Patient;
+import fr.arolla.patient.types.PatientForPsychiatry;
+import fr.arolla.patient.types.PatientForReanimation;
+import fr.arolla.patient.types.PatientForSurgery;
 
 public class Doctor {
 
     private DoctorFile currentDoctorFile;
+    private WaitRoom waitRoom;
 
     public void createDoctorFile(Person person) {
         final var doctorFile = new DoctorFile();
@@ -42,8 +47,10 @@ public class Doctor {
         return currentDoctorFile;
     }
 
-    public void setCurrentDoctorFile(DoctorFile currentDoctorFile) {
+    public Doctor setCurrentDoctorFile(DoctorFile currentDoctorFile) {
         this.currentDoctorFile = currentDoctorFile;
+
+        return this;
     }
 
     public void setNextStepForPatient() {
@@ -62,5 +69,37 @@ public class Doctor {
                 currentDoctorFile.setNextStep(HospitalServices.HOME);
                 break;
         }
+    }
+
+    public void putPatientInWaitRoom() {
+        final var diagnostic = currentDoctorFile.getDiagnostic();
+        final var nextStep = currentDoctorFile.getNextStep();
+        Patient patient = null;
+
+        switch (nextStep) {
+            case SURGERY:
+                patient = new PatientForSurgery(diagnostic);
+                break;
+            case PSYCHIATRY:
+                patient = new PatientForPsychiatry(diagnostic);
+                break;
+            case REANIMATION:
+                patient = new PatientForReanimation(diagnostic);
+                break;
+            case HOME:
+                break;
+        }
+
+        if (patient != null) {
+            waitRoom.getPatientsList().add(patient);
+        }
+    }
+
+    public WaitRoom getWaitRoom() {
+        return waitRoom;
+    }
+
+    public void setWaitRoom(WaitRoom waitRoom) {
+        this.waitRoom = waitRoom;
     }
 }
