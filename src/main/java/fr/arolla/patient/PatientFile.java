@@ -4,12 +4,14 @@ import java.util.Objects;
 
 public class PatientFile {
     private ReceptionFile receptionFile;
-    private DoctorFile doctorFile;
-    private SurgeonFile surgeonFile;
+    private final DoctorFile doctorFile;
+    private final SurgeonFile surgeonFile;
+    private final PsychiatristFile psychiatristFile;
 
     public PatientFile() {
         doctorFile = new DoctorFile();
         surgeonFile = new SurgeonFile();
+        psychiatristFile = new PsychiatristFile();
     }
 
     public ReceptionFile getReceptionFile() {
@@ -36,5 +38,9 @@ public class PatientFile {
     @Override
     public int hashCode() {
         return Objects.hash(getReceptionFile(), doctorFile);
+    }
+
+    public PsychiatristFile getPsychiatristFile() {
+        return psychiatristFile;
     }
 }
