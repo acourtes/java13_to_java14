@@ -18,12 +18,19 @@ public class Surgeon implements MedicalProcess {
         this.waitRoom = waitRoom;
     }
 
+    public WaitRoom getWaitRoom() {
+        return waitRoom;
+    }
+
     @Override
     public Patient dealWithAPatient() {
-        return waitRoom.getPatientsList().stream()
-                .filter(patient -> patient instanceof PatientForSurgery)
+        final var patient = waitRoom.getPatientsList().stream()
+                .filter(p -> p instanceof PatientForSurgery)
                 .findFirst()
                 .orElse(null);
+        waitRoom.getPatientsList().remove(patient);
+
+        return patient;
     }
 
     @Override

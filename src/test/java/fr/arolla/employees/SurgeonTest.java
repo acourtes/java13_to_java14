@@ -7,7 +7,8 @@ import fr.arolla.patient.types.PatientForSurgery;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static fr.arolla.diagnostics.PatientDiagnostic.*;
+import static fr.arolla.diagnostics.PatientDiagnostic.BIG_HEAD;
+import static fr.arolla.diagnostics.PatientDiagnostic.BROKEN_LEG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SurgeonTest {
@@ -27,6 +28,7 @@ public class SurgeonTest {
         final var result = surgeon.dealWithAPatient();
 
         assertThat(result).isEqualTo(patientForSurgery);
+        assertThat(surgeon.getWaitRoom().getPatientsList()).hasSize(1);
     }
 
     @Test
