@@ -7,11 +7,13 @@ public class PatientFile {
     private final DoctorFile doctorFile;
     private final SurgeonFile surgeonFile;
     private final PsychiatristFile psychiatristFile;
+    private final ReanimatorFile reanimatorFile;
 
     public PatientFile() {
         doctorFile = new DoctorFile();
         surgeonFile = new SurgeonFile();
         psychiatristFile = new PsychiatristFile();
+        reanimatorFile = new ReanimatorFile();
     }
 
     public ReceptionFile getReceptionFile() {
@@ -42,5 +44,9 @@ public class PatientFile {
 
     public PsychiatristFile getPsychiatristFile() {
         return psychiatristFile;
+    }
+
+    public ReanimatorFile getReanimatorFile() {
+        return reanimatorFile;
     }
 }
