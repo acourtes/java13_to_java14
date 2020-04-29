@@ -24,9 +24,9 @@ public class ReceptionTest {
 
         assertThat(result).isNotNull();
         final var receptionFile = result.getPatientFile().getReceptionFile();
-        assertThat(receptionFile.firstName).isEqualTo(person.firstName);
-        assertThat(receptionFile.lastName).isEqualTo(person.lastName);
-        assertThat(receptionFile.socialSecurityNumber).isEqualTo(person.socialSecurityNumber);
+        assertThat(receptionFile.firstName()).isEqualTo(person.firstName);
+        assertThat(receptionFile.lastName()).isEqualTo(person.lastName);
+        assertThat(receptionFile.socialSecurityNumber()).isEqualTo(person.socialSecurityNumber);
     }
 
     @DisplayName("Should manage an ordered list of patients")

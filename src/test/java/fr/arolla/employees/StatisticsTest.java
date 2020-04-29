@@ -44,8 +44,8 @@ public class StatisticsTest {
 
         final StatisticsResult result = Statistics.getStatisticForSurgeryPatient(patients);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfSurgeryPatients);
-        assertThat(result.percentage).isEqualTo(100 * expectedNumberOfSurgeryPatients / patients.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfSurgeryPatients);
+        assertThat(result.percentage()).isEqualTo(100 * expectedNumberOfSurgeryPatients / patients.size());
     }
 
     @Test
@@ -56,8 +56,8 @@ public class StatisticsTest {
 
         final StatisticsResult result = Statistics.getStatisticForSurgeryPatient(patientsCopy);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfSurgeryPatients);
-        assertThat(result.percentage).isEqualTo(expectedNumberOfSurgeryPatients * 100 / patientsCopy.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfSurgeryPatients);
+        assertThat(result.percentage()).isEqualTo(expectedNumberOfSurgeryPatients * 100 / patientsCopy.size());
     }
 
     @Test
@@ -66,8 +66,8 @@ public class StatisticsTest {
 
         final StatisticsResult result = Statistics.getStatisticForReanimationPatient(patients);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfReanimationPatients);
-        assertThat(result.percentage).isEqualTo(100 * expectedNumberOfReanimationPatients / patients.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfReanimationPatients);
+        assertThat(result.percentage()).isEqualTo(100 * expectedNumberOfReanimationPatients / patients.size());
     }
 
     @Test
@@ -78,8 +78,8 @@ public class StatisticsTest {
 
         final StatisticsResult result = Statistics.getStatisticForReanimationPatient(patientsCopy);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfReanimationPatients);
-        assertThat(result.percentage).isEqualTo(100 * expectedNumberOfReanimationPatients / patientsCopy.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfReanimationPatients);
+        assertThat(result.percentage()).isEqualTo(100 * expectedNumberOfReanimationPatients / patientsCopy.size());
     }
 
     @Test
@@ -87,8 +87,8 @@ public class StatisticsTest {
         final var expectedNumberOfPsychiatryPatients = initialNumberOfPsychiatryPatients;
         final StatisticsResult result = Statistics.getStatisticForPsychiatryPatient(patients);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfPsychiatryPatients);
-        assertThat(result.percentage).isEqualTo(100 * expectedNumberOfPsychiatryPatients / patients.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfPsychiatryPatients);
+        assertThat(result.percentage()).isEqualTo(100 * expectedNumberOfPsychiatryPatients / patients.size());
     }
 
     @Test
@@ -99,31 +99,31 @@ public class StatisticsTest {
 
         final StatisticsResult result = Statistics.getStatisticForPsychiatryPatient(patientsCopy);
 
-        assertThat(result.numberOfPatients).isEqualTo(expectedNumberOfPsychiatryPatients);
-        assertThat(result.percentage).isEqualTo(100 * expectedNumberOfPsychiatryPatients / patientsCopy.size());
+        assertThat(result.numberOfPatients()).isEqualTo(expectedNumberOfPsychiatryPatients);
+        assertThat(result.percentage()).isEqualTo(100 * expectedNumberOfPsychiatryPatients / patientsCopy.size());
     }
 
     @Test
     void should_give_global_statistics_result_on_patients() {
         final FullStatisticsResult result = Statistics.getFullStatisticsOnPatientsList(patients);
 
-        assertThat(result.numberOfPsychiatryPatients).isEqualTo(initialNumberOfPsychiatryPatients);
-        assertThat(result.numberOfReanimationPatients).isEqualTo(initialNumberOfReanimationPatients);
-        assertThat(result.numberOfSurgeryPatients).isEqualTo(initialNumberOfSurgeryPatients);
+        assertThat(result.numberOfPsychiatryPatients()).isEqualTo(initialNumberOfPsychiatryPatients);
+        assertThat(result.numberOfReanimationPatients()).isEqualTo(initialNumberOfReanimationPatients);
+        assertThat(result.numberOfSurgeryPatients()).isEqualTo(initialNumberOfSurgeryPatients);
 
         final var numberOfPsychiatrySeances = patients.stream()
                 .filter(p -> p instanceof PatientForPsychiatry)
                 .map(p -> (PatientForPsychiatry) p)
                 .map(PatientForPsychiatry::getLeftNumberOfSeances)
                 .reduce(0, Integer::sum);
-        assertThat(result.totalNumberOfPlannedPsychiatrySeances).isEqualTo(numberOfPsychiatrySeances);
+        assertThat(result.totalNumberOfPlannedPsychiatrySeances()).isEqualTo(numberOfPsychiatrySeances);
 
         final var numberOfReeducationDays = patients.stream()
                 .filter(p -> p instanceof PatientForSurgery)
                 .map(p -> (PatientForSurgery) p)
                 .map(PatientForSurgery::getNumberOfDayInReeducation)
                 .reduce(0, Integer::sum);
-        assertThat(result.totalNumberOfReeducationDays).isEqualTo(numberOfReeducationDays);
+        assertThat(result.totalNumberOfReeducationDays()).isEqualTo(numberOfReeducationDays);
 
         final var numberOfPatientsWithCoronavirus = (int) patients.stream()
                 .filter(p -> p instanceof PatientForReanimation)
@@ -131,7 +131,7 @@ public class StatisticsTest {
                 .map(PatientForReanimation::getHasStillCoronavirus)
                 .filter(coronavirus -> coronavirus)
                 .count();
-        assertThat(result.patientsWithStillCoronavirus).isEqualTo(numberOfPatientsWithCoronavirus);
+        assertThat(result.patientsWithStillCoronavirus()).isEqualTo(numberOfPatientsWithCoronavirus);
     }
 
     private ArrayList<Patient> getPatientsCopy() {

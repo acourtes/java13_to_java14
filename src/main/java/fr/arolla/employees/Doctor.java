@@ -26,7 +26,7 @@ public class Doctor {
     private Gender getGender(Patient patient) {
         final var genders = Gender.values();
         return genders[patient.getPatientFile()
-                .getReceptionFile().firstName.length() % genders.length];
+                .getReceptionFile().firstName().length() % genders.length];
     }
 
     public PatientDiagnostic diagnosePatient(Patient patient) {
@@ -39,7 +39,7 @@ public class Doctor {
     private PatientDiagnostic getDiagnostic(Patient patient) {
         final var diagnostics = PatientDiagnostic.values();
         return diagnostics[patient.getPatientFile()
-                .getReceptionFile().lastName.length() % diagnostics.length];
+                .getReceptionFile().lastName().length() % diagnostics.length];
     }
 
     public void addRemark(final String remark) {
