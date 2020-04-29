@@ -57,42 +57,23 @@ public class Doctor {
     }
 
     public void setNextStepForPatient() {
-        /* FIXME Not very sexy switch */
         switch (currentDoctorFile.getDiagnostic()) {
-            case CORONAVIRUS:
-                currentDoctorFile.setNextStep(HospitalServices.REANIMATION);
-                break;
-            case BROKEN_LEG:
-            case TOOTH_RAGE:
-                currentDoctorFile.setNextStep(HospitalServices.SURGERY);
-                break;
-            case BIG_HEAD:
-                currentDoctorFile.setNextStep(HospitalServices.PSYCHIATRY);
-                break;
-            case NOTHING:
-                currentDoctorFile.setNextStep(HospitalServices.HOME);
-                break;
+            case CORONAVIRUS -> currentDoctorFile.setNextStep(HospitalServices.REANIMATION);
+            case BROKEN_LEG, TOOTH_RAGE -> currentDoctorFile.setNextStep(HospitalServices.SURGERY);
+            case BIG_HEAD -> currentDoctorFile.setNextStep(HospitalServices.PSYCHIATRY);
+            case NOTHING -> currentDoctorFile.setNextStep(HospitalServices.HOME);
         }
     }
 
     public void putPatientInWaitRoom() {
         final var diagnostic = currentDoctorFile.getDiagnostic();
         final var nextStep = currentDoctorFile.getNextStep();
-        Patient patient = null;
-        /* FIXME Not very sexy switch */
-        switch (nextStep) {
-            case SURGERY:
-                patient = new PatientForSurgery().setDiagnostic(diagnostic);
-                break;
-            case PSYCHIATRY:
-                patient = new PatientForPsychiatry().setDiagnostic(diagnostic);
-                break;
-            case REANIMATION:
-                patient = new PatientForReanimation().setDiagnostic(diagnostic);
-                break;
-            case HOME:
-                break;
-        }
+        Patient patient = switch (nextStep) {
+            case SURGERY -> new PatientForSurgery().setDiagnostic(diagnostic);
+            case PSYCHIATRY -> new PatientForPsychiatry().setDiagnostic(diagnostic);
+            case REANIMATION -> new PatientForReanimation().setDiagnostic(diagnostic);
+            case HOME -> null;
+        };
 
         if (patient != null) {
             waitRoom.getPatientsList().add(patient);

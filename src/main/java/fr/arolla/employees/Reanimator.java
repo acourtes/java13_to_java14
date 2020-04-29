@@ -23,18 +23,15 @@ public class Reanimator implements MedicalProcess {
 
     @Override
     public boolean checkPatientDiagnostic(Patient patient) {
-        boolean result = false;
-        /* FIXME Not very sexy switch */
-        switch (patient.getDiagnostic()) {
+        boolean result = switch (patient.getDiagnostic()) {
             case CORONAVIRUS:
-                result = true;
-                break;
+                yield  true;
             case BROKEN_LEG:
             case TOOTH_RAGE:
             case BIG_HEAD:
             case NOTHING:
-                break;
-        }
+                yield false;
+        };
 
         if (!result) {
             waitRoom.getPatientsList().add(patient);

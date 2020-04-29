@@ -3,7 +3,7 @@ package fr.arolla.employees;
 import fr.arolla.patient.types.Patient;
 import fr.arolla.patient.types.PatientForPsychiatry;
 
-public class Psychiatrist implements MedicalProcess{
+public class Psychiatrist implements MedicalProcess {
     private final WaitRoom waitRoom;
 
     public Psychiatrist(WaitRoom waitRoom) {
@@ -27,18 +27,10 @@ public class Psychiatrist implements MedicalProcess{
 
     @Override
     public boolean checkPatientDiagnostic(Patient patient) {
-        boolean result = false;
-        /* FIXME Not very sexy switch */
-        switch (patient.getDiagnostic()) {
-            case CORONAVIRUS:
-            case NOTHING:
-            case TOOTH_RAGE:
-            case BROKEN_LEG:
-                break;
-            case BIG_HEAD:
-                result = true;
-                break;
-        }
+        boolean result = switch (patient.getDiagnostic()) {
+            case CORONAVIRUS, NOTHING, TOOTH_RAGE, BROKEN_LEG -> false;
+            case BIG_HEAD -> true;
+        };
 
         if (!result) {
             waitRoom.getPatientsList().add(patient);

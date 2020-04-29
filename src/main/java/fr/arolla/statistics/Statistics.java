@@ -50,7 +50,6 @@ public final class Statistics {
         int numberOfPatientsInReanimation = 0;
         int patientsWithStillCoronavirus = 0;
 
-        /* FIXME There is a better way to handle instanceOf and cast after */
         for (Patient patient : patients) {
             if (patient instanceof PatientForPsychiatry patientForPsychiatry) {
                 numberOfPatientsInPsychiatry++;
