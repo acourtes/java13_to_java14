@@ -27,10 +27,9 @@ public class Psychiatrist implements MedicalProcess{
 
     @Override
     public boolean checkPatientDiagnostic(Patient patient) {
-        final var diagnostic = patient.getDiagnostic();
         boolean result = false;
-
-        switch (diagnostic) {
+        /* FIXME Not very sexy switch */
+        switch (patient.getDiagnostic()) {
             case CORONAVIRUS:
             case NOTHING:
             case TOOTH_RAGE:

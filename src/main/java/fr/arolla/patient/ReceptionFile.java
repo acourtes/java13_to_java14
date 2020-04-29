@@ -2,7 +2,10 @@ package fr.arolla.patient;
 
 import java.util.Objects;
 
-public class ReceptionFile {
+/**
+ * Wouldn't be a value object ?
+ */
+public final class ReceptionFile {
     public final String firstName;
     public final String lastName;
     public final String socialSecurityNumber;

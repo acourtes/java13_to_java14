@@ -57,6 +57,7 @@ public class Doctor {
     }
 
     public void setNextStepForPatient() {
+        /* FIXME Not very sexy switch */
         switch (currentDoctorFile.getDiagnostic()) {
             case CORONAVIRUS:
                 currentDoctorFile.setNextStep(HospitalServices.REANIMATION);
@@ -78,7 +79,7 @@ public class Doctor {
         final var diagnostic = currentDoctorFile.getDiagnostic();
         final var nextStep = currentDoctorFile.getNextStep();
         Patient patient = null;
-
+        /* FIXME Not very sexy switch */
         switch (nextStep) {
             case SURGERY:
                 patient = new PatientForSurgery().setDiagnostic(diagnostic);

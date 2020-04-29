@@ -58,10 +58,13 @@ public class PsychiatristTest {
     }
 
     @Test
-    void should_add_a_report_in_surgeon_file() {
+    void should_add_a_report_in_psychiatrist_file() {
         final var patient = new PatientForPsychiatry().setDiagnostic(BIG_HEAD)
                 .setPatientFile(new PatientFile());
-        final var report = "New psychiatric report";
+        /* FIXME What can we use here as a preview to have an easy formatted text */
+        final var report = "New psychiatric report \n" +
+                "The patient is really too much narcissic" +
+                "And I really like to have some structure in this text !";
 
         psychiatrist.addReportForPatient(patient, report);
 

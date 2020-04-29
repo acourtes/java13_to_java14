@@ -58,10 +58,13 @@ public class ReanimatorTest {
     }
 
     @Test
-    void should_add_a_report_in_surgeon_file() {
+    void should_add_a_report_in_reanimator_file() {
         final var patient = new PatientForReanimation().setDiagnostic(CORONAVIRUS)
                 .setPatientFile(new PatientFile());
-        final var report = "New psychiatric report";
+        /* FIXME What can we use here as a preview to have an easy formatted text */
+        final var report = "New psychiatric report\n" +
+                "I'd like so much to format easily this text\n" +
+                "\t Could you do something ?";
 
         reanimator.addReportForPatient(patient, report);
 

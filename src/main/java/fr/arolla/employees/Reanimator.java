@@ -24,6 +24,7 @@ public class Reanimator implements MedicalProcess {
     @Override
     public boolean checkPatientDiagnostic(Patient patient) {
         boolean result = false;
+        /* FIXME Not very sexy switch */
         switch (patient.getDiagnostic()) {
             case CORONAVIRUS:
                 result = true;
