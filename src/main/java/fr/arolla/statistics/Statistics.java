@@ -52,15 +52,15 @@ public final class Statistics {
 
         /* FIXME There is a better way to handle instanceOf and cast after */
         for (Patient patient : patients) {
-            if (patient instanceof PatientForPsychiatry) {
+            if (patient instanceof PatientForPsychiatry patientForPsychiatry) {
                 numberOfPatientsInPsychiatry++;
-                totalNumberOfPlannedPsychiatrySeances += ((PatientForPsychiatry) patient).getLeftNumberOfSeances();
-            } else if (patient instanceof PatientForSurgery) {
+                totalNumberOfPlannedPsychiatrySeances += patientForPsychiatry.getLeftNumberOfSeances();
+            } else if (patient instanceof PatientForSurgery patientForSurgery) {
                 numberOfPatientsInSurgery++;
-                totalNumberOfReeducationDays += ((PatientForSurgery) patient).getNumberOfDayInReeducation();
-            } else if (patient instanceof PatientForReanimation) {
+                totalNumberOfReeducationDays += patientForSurgery.getNumberOfDayInReeducation();
+            } else if (patient instanceof PatientForReanimation patientForReanimation) {
                 numberOfPatientsInReanimation++;
-                if (((PatientForReanimation) patient).getHasStillCoronavirus()) {
+                if (patientForReanimation.getHasStillCoronavirus()) {
                     patientsWithStillCoronavirus++;
                 }
             }
