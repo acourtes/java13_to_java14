@@ -23,8 +23,9 @@ public abstract class Patient {
         return patientFile;
     }
 
-    public void setPatientFile(PatientFile patientFile) {
+    public Patient setPatientFile(PatientFile patientFile) {
         this.patientFile = patientFile;
+        return this;
     }
 
     @Override

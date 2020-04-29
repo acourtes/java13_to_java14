@@ -5,6 +5,12 @@ import java.util.Objects;
 public class PatientFile {
     private ReceptionFile receptionFile;
     private DoctorFile doctorFile;
+    private SurgeonFile surgeonFile;
+
+    public PatientFile() {
+        doctorFile = new DoctorFile();
+        surgeonFile = new SurgeonFile();
+    }
 
     public ReceptionFile getReceptionFile() {
         return receptionFile;
@@ -12,6 +18,10 @@ public class PatientFile {
 
     public void setReceptionFile(ReceptionFile receptionFile) {
         this.receptionFile = receptionFile;
+    }
+
+    public SurgeonFile getSurgeonFile() {
+        return surgeonFile;
     }
 
     @Override
