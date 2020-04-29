@@ -3,7 +3,7 @@ package fr.arolla.patient;
 import java.util.Objects;
 
 /**
- * Wouldn't be a value object ?
+ * FIXME Wouldn't be a value object ?
  */
 public final class ReceptionFile {
     public final String firstName;
