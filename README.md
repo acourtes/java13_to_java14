@@ -1,4 +1,4 @@
-# java13_to_java14
+# From Java 13 to Java 14
 This kata will help you to discover and experiment new features appeared in Java 14.
 
 In this pandemic times, the subject is about hospital.
