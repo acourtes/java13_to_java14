@@ -7,8 +7,6 @@ import fr.arolla.patient.types.PatientForSurgery;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static fr.arolla.diagnostics.PatientDiagnostic.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,7 +49,7 @@ public class SurgeonTest {
     void should_operate_the_patient_and_reset_diagnostic() {
         final var patient = new PatientForSurgery().setDiagnostic(BROKEN_LEG);
 
-        surgeon.operatePatient(patient);
+        surgeon.actOnPatient(patient);
 
         assertThat(patient.getDiagnostic()).isNull();
     }

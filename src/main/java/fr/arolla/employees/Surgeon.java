@@ -9,7 +9,7 @@ import java.util.List;
 import static fr.arolla.diagnostics.PatientDiagnostic.BROKEN_LEG;
 import static fr.arolla.diagnostics.PatientDiagnostic.TOOTH_RAGE;
 
-public class Surgeon {
+public class Surgeon implements MedicalProcess {
     private final WaitRoom waitRoom;
 
     private static final List<PatientDiagnostic> DIAGNOSTICS_FOR_SURGERY = List.of(BROKEN_LEG, TOOTH_RAGE);
@@ -18,6 +18,7 @@ public class Surgeon {
         this.waitRoom = waitRoom;
     }
 
+    @Override
     public Patient dealWithAPatient() {
         return waitRoom.getPatientsList().stream()
                 .filter(patient -> patient instanceof PatientForSurgery)
@@ -25,16 +26,19 @@ public class Surgeon {
                 .orElse(null);
     }
 
+    @Override
     public boolean checkPatientDiagnostic(Patient patient) {
         final var patientDiagnostic = patient.getDiagnostic();
 
         return DIAGNOSTICS_FOR_SURGERY.contains(patientDiagnostic);
     }
 
-    public void operatePatient(Patient patient) {
+    @Override
+    public void actOnPatient(Patient patient) {
         patient.setDiagnostic(null);
     }
 
+    @Override
     public void addReportForPatient(Patient patient, String report) {
         patient.getPatientFile().getSurgeonFile().getReports().add(report);
     }
