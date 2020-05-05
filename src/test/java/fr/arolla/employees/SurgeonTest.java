@@ -60,7 +60,7 @@ public class SurgeonTest {
     void should_add_a_report_in_surgeon_file() {
         final var patient = new PatientForSurgery().setDiagnostic(BROKEN_LEG)
                 .setPatientFile(new PatientFile());
-        /* FIXME What can we use here as a preview to have an easy formatted text */
+        /* FIXME What can we use here as a preview to have an easy formatted text for this long string */
         final var report = "New operation report\n" +
                 "   -> the patient is dead sadly... :'(" +
                 "      We had difficulties during operation";
